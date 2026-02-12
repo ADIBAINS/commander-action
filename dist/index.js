@@ -40617,9 +40617,11 @@ Author: ${pr.user.login}
 `;
 
 // Send to backend
+
 const response = await axios.post(backendUrl, {
-  logs: failureMessage,
+  logs: [failureMessage],
 });
+
 
 const explanation = response.data.explanation;
 

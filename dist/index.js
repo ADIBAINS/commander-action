@@ -40598,12 +40598,6 @@ async function run() {
 
     const { owner, repo } = context.repo;
 
-    // Only run if workflow failed
-    if (context.payload.workflow_run.conclusion !== "failure") {
-      console.log("Workflow did not fail. Skipping.");
-      return;
-    }
-
     console.log("Workflow failed. Running CommanderD...");
 
     // TEMP: For MVP we use basic failure message
@@ -40625,14 +40619,16 @@ Commit: ${context.payload.workflow_run.head_sha}
 
     // If PR exists, comment
     if (context.payload.workflow_run.pull_requests.length > 0) {
-      const prNumber = context.payload.workflow_run.pull_requests[0].number;
+     const prNumber = context.payload.pull_request.number;
 
-      await octokit.rest.issues.createComment({
-        owner,
-        repo,
-        issue_number: prNumber,
-        body: `## ❌ CommanderD Analysis\n\n${explanation}`,
-      });
+
+      
+await octokit.rest.issues.createComment({
+  owner,
+  repo,
+  issue_number: prNumber,
+  body: `## ❌ CommanderD Analysis\n\n${explanation}`,
+});
 
       console.log("Comment posted successfully.");
     } else {

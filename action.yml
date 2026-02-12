@@ -1,0 +1,12 @@
+
+name: "CommanderD"
+description: "AI-powered CI failure analysis"
+
+runs:
+  using: "node20"
+  main: "index.js"
+
+inputs:
+  backend_url:
+    description: "CommanderD backend endpoint"
+    required: true

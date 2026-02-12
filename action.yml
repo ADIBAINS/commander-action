@@ -6,7 +6,12 @@ runs:
   using: "node20"
   main: "dist/index.js"
 
+
 inputs:
-  backend_url: 
+  backend_url:
     description: "CommanderD backend endpoint"
     required: true
+  token:
+    description: "GitHub token"
+    required: true
+

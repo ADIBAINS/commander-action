@@ -5,7 +5,8 @@ const axios = require("axios");
 
 async function run() {
   try {
-    const token = process.env.GITHUB_TOKEN;
+    
+    const token = core.getInput("token");
     const octokit = github.getOctokit(token);
     const context = github.context;
 

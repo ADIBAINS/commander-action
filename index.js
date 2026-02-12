@@ -30,7 +30,7 @@ Commit: ${context.payload.workflow_run.head_sha}
     const backendUrl = core.getInput("backend_url");
 
     // Send to your backend
-    const response = await axios.post(`${backendUrl}/analyze`, {
+    const response = await axios.post(`${backendUrl}/api/analyze`, {
       logs: failureMessage,
     });
 

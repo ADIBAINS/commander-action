@@ -7,6 +7,6 @@ runs:
   main: "index.js"
 
 inputs:
-  backend_url:
+  backend_url: 
     description: "CommanderD backend endpoint"
     required: true

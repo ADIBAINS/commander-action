@@ -40634,9 +40634,11 @@ await octokit.rest.issues.createComment({
 console.log("Comment posted successfully.");
 
 
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+ 
+} catch (error) {
+  console.log("Full error:", error.response?.data || error.message);
+  core.setFailed(error.message);
+}
 }
 
 run();

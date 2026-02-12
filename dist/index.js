@@ -40600,29 +40600,30 @@ async function run() {
 
     console.log("Workflow failed. Running CommanderD...");
 
-    // TEMP: For MVP we use basic failure message
-    const failureMessage = `
-Workflow: ${context.payload.workflow_run.name}
-Conclusion: ${context.payload.workflow_run.conclusion}
-Branch: ${context.payload.workflow_run.head_branch}
-Commit: ${context.payload.workflow_run.head_sha}
-    `;
+    
+console.log("Running CommanderD on pull request...");
 
-    const backendUrl = core.getInput("backend_url");
+const pr = context.payload.pull_request;
+const prNumber = pr.number;
 
-    // Send to your backend
-    const response = await axios.post(`${backendUrl}/api/analyze`, {
-      logs: failureMessage,
-    });
+const backendUrl = core.getInput("backend_url");
 
-    const explanation = response.data.explanation;
+// Simple message for MVP
+const failureMessage = `
+PR: #${prNumber}
+Title: ${pr.title}
+Branch: ${pr.head.ref}
+Author: ${pr.user.login}
+`;
 
-    // If PR exists, comment
-    if (context.payload.workflow_run.pull_requests.length > 0) {
-     const prNumber = context.payload.pull_request.number;
+// Send to backend
+const response = await axios.post(backendUrl, {
+  logs: failureMessage,
+});
 
+const explanation = response.data.explanation;
 
-      
+// Comment on PR
 await octokit.rest.issues.createComment({
   owner,
   repo,
@@ -40630,10 +40631,8 @@ await octokit.rest.issues.createComment({
   body: `## ❌ CommanderD Analysis\n\n${explanation}`,
 });
 
-      console.log("Comment posted successfully.");
-    } else {
-      console.log("No PR associated with this workflow.");
-    }
+console.log("Comment posted successfully.");
+
 
   } catch (error) {
     core.setFailed(error.message);

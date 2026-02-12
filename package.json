@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build index.js -o dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,9 +19,14 @@
     "url": "https://github.com/ADIBAINS/commander-action/issues"
   },
   "homepage": "https://github.com/ADIBAINS/commander-action#readme",
-  "dependencies": {
-    "@actions/core": "^3.0.0",
-    "@actions/github": "^9.0.0",
-    "axios": "^1.13.5"
+  
+"dependencies": {
+  "@actions/core": "^1.10.0",
+  "@actions/github": "^6.0.0",
+  "axios": "^1.6.0"
+},
+
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.4"
   }
 }
